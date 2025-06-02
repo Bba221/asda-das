@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ระบบสมัครสมาชิก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Sarabun', sans-serif;
+      background: linear-gradient(135deg, #000000, #003366, #0099ff);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 25px #00cfff88;
+      max-width: 700px;
+      width: 100%;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+    }
+    .title {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00eaff, #00c3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .btn {
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px 8px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .btn-details {
+      background: linear-gradient(90deg, #ff4e50, #f00000);
+      color: white;
+    }
+    .btn-details:hover {
+      background: linear-gradient(90deg, #f00000, #ff4e50);
+      box-shadow: 0 0 15px #ff4e50aa;
+    }
+    .btn-register {
+      background: linear-gradient(90deg, #1de9b6, #1dc4e9);
+      color: white;
+    }
+    .btn-register:hover {
+      background: linear-gradient(90deg, #1dc4e9, #1de9b6);
+      box-shadow: 0 0 15px #1de9b6aa;
+    }
+    .content-box {
+      display: none;
+      margin-top: 30px;
+      text-align: left;
+      background: rgba(255 255 255 / 0.07);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #00eaff55;
+      line-height: 1.5;
+      font-size: 17px;
+      user-select: text;
+    }
+    #details p {
+      margin-bottom: 10px;
+    }
+    #details ul {
+      padding-left: 20px;
+      list-style-type: decimal;
+      color: #00c3ff;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-size: 16px;
+      user-select: text;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 8px;
+      background: #1e2a38;
+      color: white;
+      font-size: 16px;
+      box-sizing: border-box;
+      user-select: text;
+    }
+    .checkbox-group {
+      margin-top: 25px;
+      user-select: none;
+    }
+    .checkbox-group label {
+      font-size: 15px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .submit-btn {
+      margin-top: 30px;
+      padding: 14px 40px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    .submit-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .submit-btn:not(:disabled):hover {
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      box-shadow: 0 0 20px #00aaffcc;
+    }
+    .alert {
+      margin-top: 20px;
+      font-weight: 700;
+      color: #1de9b6;
+      display: none;
+      user-select: none;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">ยินดีต้อนรับผู้ที่ต้องการสมัครสมาชิกทุกท่าน</div>
+
+    <button id="toggleDetailsBtn" class="btn btn-details">ดูรายละเอียดเพิ่มเติม😋</button>
+    <button id="toggleFormBtn" class="btn btn-register">สมัครสมาชิก😻</button>
+
+    <div id="summaryText" class="content-box" style="display: block;">
+      <p>กรุณาเลือกดูรายละเอียดเพิ่มเติม หรือสมัครสมาชิกผ่านปุ่มด้านบน</p>
+    </div>
+
+    <div id="details" class="content-box">
+      <p>การสมัครสมาชิกไม่ต้องการใช้ข้อมูลส่วนตัวของท่าน<br />
+      ทางเราต้องการแค่ชื่อใน Discord (ชื่อจริง) และรหัสสมาชิกที่ต้องการ</p>
+      <ul>
+        <li>ได้รับเรทราคาซื้อขาย Texture Pack ถูกลง</li>
+        <li>สั่งทำ Texture Pack จะได้รับส่วนลดพิเศษ</li>
+      </ul>
+      <button id="hideDetailsBtn" class="btn btn-details" style="background:#800000; margin-top:20px;">ปิดรายละเอียด</button>
+    </div>
+
+    <div id="form" class="content-box" style="max-width: 100%;">
+      <form id="registerForm" novalidate>
+        <div style="text-align:center; margin-bottom: 20px;">
+          <span style="font-size:28px; font-weight:800; background: linear-gradient(90deg, #00eaff, #00c3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">สมัครสมาชิก</span>
+        </div>
+
+        <label for="discordName">1. ชื่อดิสของท่าน (ชื่อจริงเท่านั้น)</label>
+        <input type="text" id="discordName" name="discordName" required placeholder="เช่น สมชาย" />
+
+        <label for="memberCode">2. รหัสสมาชิกที่ต้องการ (เช่น DZ-12345)</label>
+        <input type="text" id="memberCode" name="memberCode" required placeholder="ตัวอย่าง: DZ-26848" />
+
+        <div class="checkbox-group">
+          <label><input type="checkbox" id="cb1" /> ข้าพเจ้ารับรู้รายละเอียดการสมัครเรียบร้อยแล้ว</label>
+          <label><input type="checkbox" id="cb2" /> ข้าพเจ้าจะไม่เอายศสมาชิกไปใช้ในทางที่ผิด</label>
+          <label><input type="checkbox" id="cb3" /> ข้าพเจ้ารับรู้ทุกอย่างในการสมัครเรียบร้อย</label>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>สมัครสมาชิก💖</button>
+
+        <div class="alert" id="alertBox">✅ คุณได้สมัครสมาชิกเรียบร้อยแล้ว!</div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  const toggleDetailsBtn = document.getElementById('toggleDetailsBtn');
+  const toggleFormBtn = document.getElementById('toggleFormBtn');
+  const hideDetailsBtn = document.getElementById('hideDetailsBtn');
+  const details = document.getElementById('details');
+  const form = document.getElementById('form');
+  const summaryText = document.getElementById('summaryText');
+  const alertBox = document.getElementById('alertBox');
+  const submitBtn = document.getElementById('submitBtn');
+  const checkboxes = [
+    document.getElementById('cb1'),
+    document.getElementById('cb2'),
+    document.getElementById('cb3')
+  ];
+
+  // เริ่มต้นซ่อน details และ form
+  details.style.display = 'none';
+  form.style.display = 'none';
+  alertBox.style.display = 'none';
+
+  // ฟังก์ชันสลับแสดง/ซ่อน details
+  toggleDetailsBtn.addEventListener('click', () => {
+    details.style.display = 'block';
+    form.style.display = 'none';
+    summaryText.style.display = 'none';
+    toggleDetailsBtn.style.display = 'none';
+    toggleFormBtn.style.display = 'inline-block';
+    alertBox.style.display = 'none';
+  });
+
+  hideDetailsBtn.addEventListener('click', () => {
+    details.style.display = 'none';
+    summaryText.style.display = 'block';
+    toggleDetailsBtn.style.display = 'inline-block';
+  });
+
+  // ฟังก์ชันสลับแสดง/ซ่อน form
+  toggleFormBtn.addEventListener('click', () => {
+    form.style.display = 'block';
+    details.style.display = 'none';
+    summaryText.style.display = 'none';
+    toggleFormBtn.style.display = 'none';
+    toggleDetailsBtn.style.display = 'inline-block';
+    alertBox.style.display = 'none';
+  });
+
+  // เช็ค checkbox ถ้าติ๊กครบทั้ง 3 ช่อง จะ enable ปุ่ม submit
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const allChecked = checkboxes.every(c => c.checked);
+      submitBtn.disabled = !allChecked;
+    });
+  });
+
+  // ตรวจสอบรูปแบบรหัสสมาชิก
+  function isValidMemberCode(code) {
+    return /^[A-Z]{2,}-\d{5,}$/.test(code);
+  }
+
+  // ส่งข้อมูลเมื่อ submit form
+  document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const discordName = document.getElementById('discordName').value.trim();
+    const memberCode = document.getElementById('memberCode').value.trim();
+
+    if (!discordName) {
+      alert('กรุณากรอกชื่อ Discord ของท่าน');
+      return;
+    }
+    if (!isValidMemberCode(memberCode)) {
+      alert('รูปแบบรหัสสมาชิกไม่ถูกต้อง เช่น DZ-12345');
+      return;
+    }
+
+    // ส่งข้อมูลไป Discord Webhook
+    const webhookURL = "https://discord.com/api/webhooks/1364257858379714793/Pmsmk_Ov2rfLOhWcoz67FvEzFtf57h-veQpuHN2upp2gt3t4lwnIQYH_LNmUM9_amKb_";
+
+    const content = `📝 มีผู้สมัครสมาชิกใหม่\n👤 ชื่อ Discord: ${discordName}\n🔐 รหัสสมาชิก: ${memberCode}`;
+
+    fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('ส่งไป Discord ไม่สำเร็จ');
+      alertBox.style.display = 'block';
+      submitBtn.disabled = true;
+      checkboxes.forEach(cb => (cb.checked = false));
+      this.reset();
+
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+        form.style.display = 'none';
+        summaryText.style.display = 'block';
+        toggleFormBtn.style.display = 'inline-block';
+      }, 4000);
+    })
+    .catch(error => {
+      alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+      console.error(error);
+    });
+  });
+</script>
+</body>
+</html>
+
